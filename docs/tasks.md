@@ -10,11 +10,11 @@
 
 ## Milestone 2: Core UI
 
-- [ ] Create the main HTML layout.
-- [ ] Add input and output editor panes.
-- [ ] Add toolbar actions.
-- [ ] Add responsive mobile layout.
-- [ ] Add base light and dark theme styles.
+- [x] Create the main HTML layout.
+- [x] Add input and output editor panes.
+- [x] Add toolbar actions.
+- [x] Add responsive mobile layout.
+- [x] Add base light and dark theme styles.
 
 ## Milestone 3: JSON Tools
 

@@ -8,13 +8,79 @@
     <script src="/app.js" defer></script>
   </head>
   <body>
-    <main class="shell">
-      <section class="intro" aria-labelledby="page-title">
-        <p class="eyebrow">json.furkansahin.dev</p>
-        <h1 id="page-title">JSON Viewer</h1>
-        <p class="lede">A tiny JSON formatter is warming up.</p>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">json.furkansahin.dev</p>
+          <h1>JSON Viewer</h1>
+        </div>
+        <div class="topbar-actions" aria-label="View options">
+          <button class="icon-button" type="button" data-action="theme" aria-label="Toggle theme" title="Toggle theme">
+            <span aria-hidden="true">◐</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="toolbar" aria-label="JSON actions">
+        <div class="toolbar-group" role="group" aria-label="Formatting actions">
+          <button class="button primary" type="button" data-action="format">Format</button>
+          <button class="button" type="button" data-action="minify">Minify</button>
+          <button class="button" type="button" data-action="validate">Validate</button>
+        </div>
+
+        <div class="toolbar-group" role="group" aria-label="Output actions">
+          <button class="button" type="button" data-action="copy">Copy</button>
+          <button class="button quiet" type="button" data-action="clear">Clear</button>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="JSON workspace">
+        <article class="editor-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Input</h2>
+              <p>Paste JSON here</p>
+            </div>
+            <span class="status-pill" data-input-status>Ready</span>
+          </div>
+          <label class="sr-only" for="json-input">JSON input</label>
+          <textarea
+            id="json-input"
+            class="editor"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            placeholder='{"hello":"world"}'
+          ></textarea>
+          <footer class="panel-footer">
+            <span data-input-lines>0 lines</span>
+            <span data-input-size>0 B</span>
+          </footer>
+        </article>
+
+        <article class="editor-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Output</h2>
+              <p>Formatted JSON appears here</p>
+            </div>
+            <span class="status-pill muted" data-output-status>Idle</span>
+          </div>
+          <label class="sr-only" for="json-output">JSON output</label>
+          <textarea
+            id="json-output"
+            class="editor output"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            readonly
+          ></textarea>
+          <footer class="panel-footer">
+            <span data-output-lines>0 lines</span>
+            <span data-output-size>0 B</span>
+          </footer>
+        </article>
       </section>
     </main>
   </body>
 </html>
-
