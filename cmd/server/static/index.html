@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="system">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,11 +11,10 @@
     <main class="app-shell">
       <header class="topbar">
         <div>
-          <p class="eyebrow">json.furkansahin.dev</p>
           <h1>JSON Viewer</h1>
         </div>
         <div class="topbar-actions" aria-label="View options">
-          <button class="icon-button" type="button" data-action="theme" aria-label="Toggle theme" title="Toggle theme">
+          <button class="icon-button" type="button" data-action="theme" aria-label="Use dark theme" aria-pressed="false" title="Toggle theme">
             <span aria-hidden="true">◐</span>
           </button>
         </div>
@@ -37,6 +36,7 @@
         </label>
 
         <div class="toolbar-group" role="group" aria-label="Output actions">
+          <button class="button" type="button" data-action="sample">Sample</button>
           <button class="button" type="button" data-action="copy">Copy</button>
           <button class="button quiet" type="button" data-action="clear">Clear</button>
         </div>

@@ -29,13 +29,13 @@
 
 ## Milestone 4: Polish
 
-- [ ] Add theme toggle with persisted preference.
-- [ ] Add keyboard shortcuts if they feel natural.
-- [ ] Add sample JSON action.
-- [ ] Improve empty, valid, and error states.
-- [ ] Check desktop layout.
-- [ ] Check mobile layout.
-- [ ] Check accessibility basics.
+- [x] Add theme toggle with persisted preference.
+- [x] Add keyboard shortcuts if they feel natural.
+- [x] Add sample JSON action.
+- [x] Improve empty, valid, and error states.
+- [x] Check desktop layout.
+- [x] Check mobile layout.
+- [x] Check accessibility basics.
 
 ## Milestone 5: Deployment Prep
 

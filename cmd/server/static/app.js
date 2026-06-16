@@ -1,6 +1,8 @@
 const input = document.querySelector("#json-input");
 const output = document.querySelector("#json-output");
 const indentSize = document.querySelector("#indent-size");
+const themeButton = document.querySelector('[data-action="theme"]');
+const copyButton = document.querySelector('[data-action="copy"]');
 
 const inputLines = document.querySelector("[data-input-lines]");
 const inputSize = document.querySelector("[data-input-size]");
@@ -11,12 +13,29 @@ const outputStatus = document.querySelector("[data-output-status]");
 const message = document.querySelector("[data-message]");
 
 const actions = document.querySelectorAll("[data-action]");
+const root = document.documentElement;
+const themeStorageKey = "json-viewer-theme";
+const themes = ["system", "light", "dark"];
+
+const sampleJSON = {
+  project: "json-viewer",
+  domain: "json.furkansahin.dev",
+  features: ["format", "minify", "validate", "copy"],
+  deploy: {
+    runtime: "go",
+    proxy: "caddy",
+    memoryMB: 1024
+  },
+  updatedAt: "2026-06-16T13:00:00Z"
+};
 
 function parseJSON() {
   const value = input.value.trim();
 
   if (!value) {
-    throw new Error("Paste JSON to begin.");
+    const error = new Error("Paste JSON to begin.");
+    error.name = "EmptyInputError";
+    throw error;
   }
 
   try {
@@ -75,6 +94,10 @@ function updateStats() {
   outputSize.textContent = formatBytes(byteSize(outputValue));
 }
 
+function updateControls() {
+  copyButton.disabled = !output.value;
+}
+
 function setStatus(target, text, state = "muted") {
   target.textContent = text;
   target.classList.remove("muted", "success", "error");
@@ -94,6 +117,7 @@ function setOutput(value, status = "Ready") {
   output.value = value;
   setStatus(outputStatus, status, value ? "success" : "muted");
   updateStats();
+  updateControls();
 }
 
 function setValid(messageText) {
@@ -103,10 +127,20 @@ function setValid(messageText) {
 }
 
 function setError(error) {
+  if (error.name === "EmptyInputError") {
+    input.classList.remove("has-error");
+    setStatus(inputStatus, "Ready", "muted");
+    setStatus(outputStatus, output.value ? outputStatus.textContent : "Idle", output.value ? "success" : "muted");
+    setMessage(error.message);
+    updateControls();
+    return;
+  }
+
   input.classList.add("has-error");
   setStatus(inputStatus, "Invalid", "error");
   setStatus(outputStatus, "Idle", "muted");
   setMessage(error.message, "error");
+  updateControls();
 }
 
 function formatJSON() {
@@ -157,13 +191,63 @@ function clearAll() {
   setStatus(outputStatus, "Idle", "muted");
   setMessage("Paste JSON to begin.");
   updateStats();
+  updateControls();
   input.focus();
+}
+
+function loadSample() {
+  input.value = JSON.stringify(sampleJSON, null, Number(indentSize.value));
+  input.classList.remove("has-error");
+  formatJSON();
+  input.focus();
+}
+
+function applyTheme(theme) {
+  const normalizedTheme = themes.includes(theme) ? theme : "system";
+  root.dataset.theme = normalizedTheme;
+  saveTheme(normalizedTheme);
+
+  const nextTheme = themes[(themes.indexOf(normalizedTheme) + 1) % themes.length];
+  const labels = {
+    system: "Use light theme",
+    light: "Use dark theme",
+    dark: "Use system theme"
+  };
+
+  themeButton.setAttribute("aria-label", labels[normalizedTheme]);
+  themeButton.setAttribute("aria-pressed", normalizedTheme === "dark" ? "true" : "false");
+  themeButton.title = `Theme: ${normalizedTheme}`;
+  themeButton.dataset.nextTheme = nextTheme;
+}
+
+function toggleTheme() {
+  applyTheme(themeButton.dataset.nextTheme || "light");
+}
+
+function loadTheme() {
+  try {
+    return localStorage.getItem(themeStorageKey) || "system";
+  } catch (_error) {
+    return "system";
+  }
+}
+
+function saveTheme(theme) {
+  try {
+    localStorage.setItem(themeStorageKey, theme);
+  } catch (_error) {
+    return;
+  }
 }
 
 function handleAction(event) {
   const action = event.currentTarget.dataset.action;
 
   try {
+    if (action === "theme") {
+      toggleTheme();
+      return;
+    }
     if (action === "format") {
       formatJSON();
       return;
@@ -180,6 +264,10 @@ function handleAction(event) {
       void copyOutput();
       return;
     }
+    if (action === "sample") {
+      loadSample();
+      return;
+    }
     if (action === "clear") {
       clearAll();
       return;
@@ -192,9 +280,46 @@ function handleAction(event) {
 function handleInput() {
   input.classList.remove("has-error");
   setStatus(inputStatus, input.value ? "Editing" : "Ready", "muted");
+  setMessage(input.value ? "Editing JSON." : "Paste JSON to begin.");
   updateStats();
 }
 
+function handleShortcut(event) {
+  const modifier = event.metaKey || event.ctrlKey;
+
+  if (!modifier) {
+    return;
+  }
+
+  if (event.key === "Enter") {
+    event.preventDefault();
+    try {
+      formatJSON();
+    } catch (error) {
+      setError(error);
+    }
+    return;
+  }
+
+  if (event.shiftKey && event.key.toLowerCase() === "m") {
+    event.preventDefault();
+    try {
+      minifyJSON();
+    } catch (error) {
+      setError(error);
+    }
+    return;
+  }
+
+  if (event.shiftKey && event.key.toLowerCase() === "c") {
+    event.preventDefault();
+    void copyOutput();
+  }
+}
+
+applyTheme(loadTheme());
 input.addEventListener("input", handleInput);
+document.addEventListener("keydown", handleShortcut);
 actions.forEach((button) => button.addEventListener("click", handleAction));
 updateStats();
+updateControls();
