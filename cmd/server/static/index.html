@@ -28,6 +28,14 @@
           <button class="button" type="button" data-action="validate">Validate</button>
         </div>
 
+        <label class="select-control">
+          <span>Indent</span>
+          <select id="indent-size" aria-label="Indent size">
+            <option value="2">2 spaces</option>
+            <option value="4">4 spaces</option>
+          </select>
+        </label>
+
         <div class="toolbar-group" role="group" aria-label="Output actions">
           <button class="button" type="button" data-action="copy">Copy</button>
           <button class="button quiet" type="button" data-action="clear">Clear</button>
@@ -81,6 +89,8 @@
           </footer>
         </article>
       </section>
+
+      <p class="message" role="status" aria-live="polite" data-message>Paste JSON to begin.</p>
     </main>
   </body>
 </html>

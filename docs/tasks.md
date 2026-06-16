@@ -18,14 +18,14 @@
 
 ## Milestone 3: JSON Tools
 
-- [ ] Validate JSON in the browser.
-- [ ] Format JSON with 2-space indentation.
-- [ ] Add 4-space indentation option.
-- [ ] Minify JSON.
-- [ ] Copy output to clipboard.
-- [ ] Clear input and output.
-- [ ] Show byte size and line count.
-- [ ] Show useful parse errors.
+- [x] Validate JSON in the browser.
+- [x] Format JSON with 2-space indentation.
+- [x] Add 4-space indentation option.
+- [x] Minify JSON.
+- [x] Copy output to clipboard.
+- [x] Clear input and output.
+- [x] Show byte size and line count.
+- [x] Show useful parse errors.
 
 ## Milestone 4: Polish
 
