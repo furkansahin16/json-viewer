@@ -1,0 +1,16 @@
+.DS_Store
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Go build output
+/bin/
+*.test
+*.out
+
+# Editor and tooling
+.idea/
+.vscode/
+
