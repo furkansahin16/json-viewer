@@ -69,3 +69,29 @@ Use a different host port if needed:
 ```sh
 docker run --rm -e PORT=8080 -p 5500:8080 json-viewer
 ```
+
+## GitHub Container Registry
+
+Images are published by GitHub Actions to:
+
+```txt
+ghcr.io/furkansahin16/json-viewer:latest
+```
+
+Pull the latest image:
+
+```sh
+docker pull ghcr.io/furkansahin16/json-viewer:latest
+```
+
+Run it locally:
+
+```sh
+docker run --rm -p 8080:8080 ghcr.io/furkansahin16/json-viewer:latest
+```
+
+The package page is:
+
+```txt
+https://github.com/furkansahin16/json-viewer/pkgs/container/json-viewer
+```
