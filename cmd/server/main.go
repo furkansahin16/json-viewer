@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-//go:embed static
+//go:embed static/*
 var staticFiles embed.FS
 
 func main() {
@@ -43,10 +43,31 @@ func routes() (*http.ServeMux, error) {
 	}
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("GET /healthz", healthHandler)
-	mux.Handle("GET /", http.FileServerFS(staticRoot))
+	mux.HandleFunc("GET /health", healthHandler)
+	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticRoot))))
+	mux.HandleFunc("GET /", indexHandler(staticRoot))
 
 	return mux, nil
+}
+
+func indexHandler(staticRoot fs.FS) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			http.NotFound(w, r)
+			return
+		}
+
+		index, err := fs.ReadFile(staticRoot, "index.html")
+		if err != nil {
+			slog.Error("failed to read index.html", "error", err)
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write(index)
+	}
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {

@@ -23,7 +23,7 @@ PORT=3000 go run ./cmd/server
 ## Health Check
 
 ```sh
-curl http://localhost:8080/healthz
+curl http://localhost:8080/health
 ```
 
 Expected response:
