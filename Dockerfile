@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine AS build
+FROM golang:1.26.4-alpine3.24 AS build
 
 WORKDIR /src
 
@@ -17,4 +17,3 @@ USER 65532:65532
 EXPOSE 8080
 
 ENTRYPOINT ["/json-viewer"]
-
