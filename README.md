@@ -38,3 +38,34 @@ Expected response:
 go build -o bin/json-viewer ./cmd/server
 ```
 
+## Environment
+
+```sh
+cp .env.example .env
+```
+
+The app reads:
+
+```txt
+PORT=8080
+```
+
+## Docker
+
+Build the image:
+
+```sh
+docker build -t json-viewer .
+```
+
+Run it:
+
+```sh
+docker run --rm --env-file .env -p 8080:8080 json-viewer
+```
+
+Use a different host port if needed:
+
+```sh
+docker run --rm -e PORT=8080 -p 5500:8080 json-viewer
+```
