@@ -163,18 +163,48 @@ h2 {
   border-radius: 8px;
   background: var(--panel-subtle);
   padding: 0 10px;
+  padding-right: 8px;
   color: var(--muted);
   font-size: 0.84rem;
   font-weight: 600;
 }
 
 .select-control select {
-  min-height: 28px;
-  border: 0;
-  background: transparent;
+  min-height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  appearance: none;
+  background: var(--panel);
   color: var(--fg);
   cursor: pointer;
   font-weight: 650;
+  line-height: 1.2;
+  padding: 0 28px 0 10px;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.select-control select:hover {
+  border-color: var(--border-strong);
+}
+
+.select-control select:focus-visible {
+  outline: none;
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+}
+
+.select-control select option {
+  background: var(--panel);
+  color: var(--fg);
+}
+
+.select-control::after {
+  content: "⌄";
+  margin-left: -22px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  pointer-events: none;
 }
 
 .button,
