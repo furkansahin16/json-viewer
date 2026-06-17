@@ -156,6 +156,7 @@ h2 {
 
 .select-control {
   display: inline-flex;
+  position: relative;
   align-items: center;
   gap: 8px;
   min-height: 36px;
@@ -200,10 +201,14 @@ h2 {
 }
 
 .select-control::after {
-  content: "⌄";
-  margin-left: -22px;
-  color: var(--muted);
-  font-size: 0.72rem;
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top: 5px solid var(--muted);
+  transform: translateY(-35%);
   pointer-events: none;
 }
 
