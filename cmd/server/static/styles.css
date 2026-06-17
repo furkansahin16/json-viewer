@@ -163,8 +163,7 @@ h2 {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--panel-subtle);
-  padding: 0 10px;
-  padding-right: 8px;
+  padding: 0 8px 0 10px;
   color: var(--muted);
   font-size: 0.84rem;
   font-weight: 600;
@@ -208,7 +207,7 @@ h2 {
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
   border-top: 5px solid var(--muted);
-  transform: translateY(-35%);
+  transform: translateY(-50%);
   pointer-events: none;
 }
 
